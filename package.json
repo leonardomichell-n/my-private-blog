@@ -1,0 +1,10 @@
+{
+  "name": "private-blog",
+  "version": "1.0.0",
+  "description": "Privacy-first personal blog",
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "dependencies": {}
+}
+```
