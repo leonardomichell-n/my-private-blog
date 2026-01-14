@@ -1,6 +1,10 @@
-# netlify.toml
 [build]
   functions = "netlify/functions"
+
+[[redirects]]
+  from = "/login"
+  to = "/login.html"
+  status = 200
 
 [[redirects]]
   from = "/*"
