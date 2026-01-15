@@ -5,8 +5,8 @@
   from = "/*"
   to = "/login.html"
   status = 200
+  conditions = {Role = ["!*"]}
   force = false
-  conditions = {Cookie = ["!auth=authenticated"]}
 
 [[redirects]]
   from = "/login"

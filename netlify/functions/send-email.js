@@ -1,4 +1,3 @@
-// netlify/functions/send-email.js
 const https = require('https');
 
 exports.handler = async (event) => {
@@ -8,7 +7,6 @@ exports.handler = async (event) => {
 
   const { name, email, message } = JSON.parse(event.body);
 
-  // Using Resend API (free tier: 100 emails/day)
   const data = JSON.stringify({
     from: 'noreply@yourdomain.com',
     to: process.env.YOUR_EMAIL,

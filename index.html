@@ -1,10 +1,10 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Thoughts</title>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
         * {
             margin: 0;
@@ -25,6 +25,24 @@
             margin-bottom: 3rem;
             padding-bottom: 1rem;
             border-bottom: 2px solid #eee;
+            position: relative;
+        }
+        
+        .logout-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #f0f0f0;
+            color: #333;
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        
+        .logout-btn:hover {
+            background: #e0e0e0;
         }
         
         h1 {
@@ -35,6 +53,30 @@
         .subtitle {
             color: #666;
             font-size: 0.9rem;
+        }
+        
+        .music-player {
+            margin-top: 1rem;
+        }
+        
+        .music-btn {
+            background: #f0f0f0;
+            color: #333;
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .music-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .music-btn.playing {
+            background: #333;
+            color: white;
+            border-color: #333;
         }
         
         article {
@@ -132,38 +174,14 @@
             padding-top: 2rem;
             border-top: 1px solid #eee;
         }
-        
-        .music-player {
-            margin-top: 1rem;
-        }
-        
-        .music-btn {
-            background: #f0f0f0;
-            color: #333;
-            padding: 0.5rem 1rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-        
-        .music-btn:hover {
-            background: #e0e0e0;
-        }
-        
-        .music-btn.playing {
-            background: #333;
-            color: white;
-            border-color: #333;
-        }
     </style>
 </head>
 <body>
     <header>
+        <button class="logout-btn" onclick="netlifyIdentity.logout()">Logout</button>
         <h1>My Thoughts</h1>
         <p class="subtitle">A private space for personal reflections</p>
         
-        <!-- Music Player -->
         <div class="music-player">
             <audio id="bgMusic" loop>
                 <source src="/music/background.mp3" type="audio/mpeg">
@@ -214,10 +232,21 @@
     </main>
 
     <footer class="privacy-note">
-        <p><strong>Privacy Notice:</strong> This site uses only essential session cookies for authentication. No analytics or tracking. Messages are sent directly via serverless function.</p>
+        <p><strong>Privacy Notice:</strong> This site uses Netlify Identity for authentication. No analytics or tracking. Messages are sent directly via serverless function.</p>
     </footer>
 
     <script>
+        // Netlify Identity initialization
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/";
+                    });
+                }
+            });
+        }
+
         // Music player functionality
         const audio = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
